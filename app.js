@@ -42,6 +42,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     document.addEventListener('keydown', moveShooter)
     
+    function screenmoveShooter(key) {
+        squares[currentShooterIndex].classList.remove('shooter')
+        squares[currentShooterIndex].innerHTML = ``
+        switch(key){
+            case 37:
+                if(currentShooterIndex%width !== 0) currentShooterIndex -= 1
+                break
+            case 39:
+                if(currentShooterIndex%width < width - 1) currentShooterIndex += 1
+                break
+        }
+        squares[currentShooterIndex].classList.add('shooter')
+        squares[currentShooterIndex].innerHTML = `<i class="fas fa-space-shuttle"></i>`
+        
+    }
+    
+    document.querySelector('#left').addEventListener('click', () => {screenmoveShooter(37)})
+    document.querySelector('#right').addEventListener('click', () => {screenmoveShooter(39)})
+    document.querySelector('#refresh').addEventListener('click', () => {
+        window.location.reload()
+    })
+
     //Function to move the Invaders
     function moveInvaders(){
         const leftEdge = alienInvaders[0] % width === 0
@@ -135,4 +157,46 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     document.addEventListener('keyup', shoot)
     
+    function screenshoot(key) {
+        let laserId
+        let currentLaserIndex = currentShooterIndex
+        //move the laser from the shooter to the alien Invader
+        function moveLaser(){
+            squares[currentLaserIndex].classList.remove('laser')
+            squares[currentLaserIndex].innerHTML = ''
+            squares[currentShooterIndex].innerHTML = `<i class="fas fa-space-shuttle"></i>`
+            
+            currentLaserIndex -= width
+            squares[currentLaserIndex].classList.add('laser')
+            squares[currentLaserIndex].innerHTML = '<i class="fas fa-fire" style="color: orange; font-size: 25px;"></i>'
+            if(squares[currentLaserIndex].classList.contains('invader')){
+                squares[currentLaserIndex].classList.remove('laser')
+                squares[currentLaserIndex].innerHTML = ''
+                squares[currentLaserIndex].classList.remove('invader')
+                squares[currentLaserIndex].classList.add('boom')
+                setTimeout(() => squares[currentLaserIndex].classList.remove('boom'), 250)
+                clearInterval(laserId)
+
+                const alienTakenDown = alienInvaders.indexOf(currentLaserIndex)
+                alienInvadersTakenDown.push(alienTakenDown)
+                result++
+                resultDisplay.textContent = result
+            }
+            if(currentLaserIndex < width){
+                clearInterval(laserId)
+                setTimeout(() => {
+                    squares[currentLaserIndex].classList.remove('laser');
+                    squares[currentLaserIndex].innerHTML = ''
+                }, 100)
+            }
+        }
+        
+        switch(key){
+            case 32:
+                laserId = setInterval(moveLaser, 100)
+                break
+            
+        }
+    }
+    document.querySelector('#fire').addEventListener('click', () => {screenshoot(32)})
 })
