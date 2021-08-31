@@ -1,0 +1,102 @@
+body{
+    margin: 0;
+    background-color:rgb(200, 242, 255);
+}
+
+.container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: monospace;
+}
+
+h1{
+    font-family: monospace;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 45px;
+    text-align: center;
+}
+
+button{
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    background: rgb(5, 241, 104);
+    color: white;
+    outline: none;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-family: monospace;
+    font-size: 17px;
+    font-weight: bolder;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+button:focus{
+    outline: none;
+}
+
+.score{
+    float: left;
+    padding: 10px 0 5px 0;
+    font-size: 20px;
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    background:rgb(95, 164, 255);
+    width: 510px;
+    height: 510px;
+    border-radius: 25px;
+}
+
+.grid div {
+    width: 34px;
+    height: 34px;
+}
+
+.shooter i{
+    transform: rotateZ(-90deg);
+    color: rgb(58, 238, 58);
+    font-size: 30px;
+}
+
+.invader {
+    background-color:rgb(255, 102, 102);
+    border-radius:  50%;
+}
+
+.boom {
+    background-color: red;
+}
+
+/* .laser{
+    background-color:orange;
+} */
+
+@media screen and (max-width: 520px) {
+    .grid{
+        width: 300px;
+        height: 300px;
+    }
+    
+    .grid div{
+        width: 20px;
+        height: 20px;
+    }
+
+    .laser i{
+        font-size: 15px !important;
+    }
+
+    .shooter i{
+        font-size: 17px;
+    }
+}
